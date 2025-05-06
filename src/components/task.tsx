@@ -2,16 +2,31 @@ import '../styles/task.css';
 import { TaskInterface } from '../interfaces/task';
 import { deleteTask, toggleTask } from '@/store/tasksSlice';
 import { useDispatch } from 'react-redux';
+import { useContext } from 'react';
+import { StatusToast, ToastContextInterface } from '@/interfaces/toast';
+import { ToastContext } from '@/contexts/toast-context';
 
 const Task = ({ task }: { task: TaskInterface }) => {
   const dispatch = useDispatch();
 
+  const context = useContext<ToastContextInterface | null>(ToastContext);
+
+  if (!context) return;
+
+  const { notify } = context;
+
   const onChangeTask = (id: number) => {
     dispatch(toggleTask(id));
+    notify({
+      title: 'Success',
+      subtitle: 'Update status successfully',
+      status: StatusToast.SUCCESS,
+    });
   };
 
   const onRemoveTask = (id: number) => {
     dispatch(deleteTask(id));
+    notify({ title: 'Success', subtitle: 'Remove task successfully', status: StatusToast.SUCCESS });
   };
   return (
     <div className="task">

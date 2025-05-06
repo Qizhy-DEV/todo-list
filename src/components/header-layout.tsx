@@ -1,10 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../styles/header-layout.css';
 import { TaskInterface } from '../interfaces/task';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { addTask } from '@/store/tasksSlice';
+import { StatusToast, ToastContextInterface } from '@/interfaces/toast';
+import { ToastContext } from '@/contexts/toast-context';
 
 const HeaderLayout = () => {
   const dispatch = useDispatch();
@@ -17,13 +19,23 @@ const HeaderLayout = () => {
 
   const [visibleAddNew, setVisibleAddNew] = useState(false);
 
+  const context = useContext<ToastContextInterface | null>(ToastContext);
+
+  if (!context) return;
+
+  const { notify } = context;
+
   const handleAddNewTask = () => {
     if (title === '') {
-      alert('Please enter the title');
+      notify({ title: 'Warning', subtitle: 'Please enter the title', status: StatusToast.WARNING });
       return;
     }
     if (subtitle === '') {
-      alert('Please enter the subtitle');
+      notify({
+        title: 'Warning',
+        subtitle: 'Please enter the subtitle',
+        status: StatusToast.WARNING,
+      });
       return;
     }
     const task: TaskInterface = {
@@ -36,6 +48,11 @@ const HeaderLayout = () => {
     setSubtitle('');
     setTitle('');
     setVisibleAddNew(false);
+    notify({
+      title: 'Success',
+      subtitle: 'Create new task successfully',
+      status: StatusToast.SUCCESS,
+    });
   };
 
   return (
