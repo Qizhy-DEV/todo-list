@@ -1,0 +1,12 @@
+
+.content {
+    background-color: #f9f9f9;
+    width: 380px;
+    aspect-ratio: 9 / 12;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+    overflow-y: auto;
+}
