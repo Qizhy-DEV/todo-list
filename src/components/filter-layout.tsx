@@ -1,3 +1,4 @@
+'use client';
 import '../styles/filter-layout.css';
 import { useContext } from 'react';
 import { TaskContext } from '../contexts/task-context';

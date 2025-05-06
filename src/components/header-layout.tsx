@@ -1,3 +1,4 @@
+'use client';
 import { useContext, useState } from 'react';
 import '../styles/header-layout.css';
 import { TaskContext } from '../contexts/task-context';

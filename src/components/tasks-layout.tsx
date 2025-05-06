@@ -1,13 +1,11 @@
+'use client';
 import { useContext } from 'react';
 import '../styles/tasks-layout.css';
 import Task from './task';
 import { TaskContext } from '../contexts/task-context';
 import { TaskInterface } from '../interfaces/task';
-import { usePathname } from 'next/navigation';
 
-const TasksLayout = () => {
-  const pathname = usePathname();
-
+const TasksLayout = ({ completedFilter = false }: { completedFilter?: boolean }) => {
   const context = useContext(TaskContext);
 
   if (!context) return null;
@@ -30,7 +28,7 @@ const TasksLayout = () => {
   };
 
   const validateTasks = () => {
-    if (pathname === '/completed-tasks') {
+    if (completedFilter) {
       return tasks.filter((item) => item.isCompleted);
     } else {
       return tasks;

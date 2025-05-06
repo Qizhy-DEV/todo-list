@@ -45,6 +45,8 @@
   transition: 0.5s;
   display: flex;
   flex-direction: column;
+  justify-content: start;
+  align-items: start;
   gap: 10px;
   overflow: hidden;
   opacity: 0;
@@ -61,6 +63,7 @@
   border-radius: 5px;
   border: 1px solid #999;
   padding: 0 4px;
+  width: 100%;
 }
 
 .adding__txt:focus {
@@ -75,4 +78,5 @@
   padding: 0 4px;
   font-size: 14px;
   cursor: pointer;
+  width: 100%;
 }
