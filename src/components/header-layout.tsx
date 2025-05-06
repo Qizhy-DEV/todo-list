@@ -41,7 +41,7 @@ const HeaderLayout = () => {
     <>
       <section id="header">
         <div className="left-section">
-          <span className="title">Today{'&apos;'}s Task</span>
+          <span className="title">Today&apos;s Task</span>
           <span className="date">Wednesday, 11 May</span>
         </div>
         <button onClick={() => setVisibleAddNew((prev) => !prev)} className="btn-add">
