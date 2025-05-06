@@ -1,45 +1,45 @@
 #filter {
-    display: flex;
-    justify-content: start;
-    gap: 1.5rem;
+  display: flex;
+  justify-content: start;
+  gap: 1.5rem;
 }
 
 .filter-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
 }
 
 .filter-item__name {
-    font-weight: 400;
-    color: #999;
-    transition: 0.5s;
+  font-weight: 400;
+  color: #999;
+  transition: 0.5s;
 }
 
 .filter-item__number-of-tasks {
-    font-weight: 400;
-    font-size: 13px;
-    color: #999;
-    border-radius: 50%;
-    transition: 0.5s;
-    height: 20px;
-    padding: 0 5px;
-    display: flex;
-    align-items: center;
-    background-color: #f1f1f1;
+  font-weight: 400;
+  font-size: 13px;
+  color: #999;
+  border-radius: 50%;
+  transition: 0.5s;
+  height: 20px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
 }
 
 .no-decoration {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .filter-item__name--active {
-    font-weight: 600;
-    color: #0562fb;
+  font-weight: 600;
+  color: #0562fb;
 }
 
 .filter-item__number-of-tasks--active {
-    background-color: #0562fb;
-    color: white;
+  background-color: #0562fb;
+  color: white;
 }

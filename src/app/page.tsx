@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <section className="content">
       <HeaderLayout />
-
       <FilterLayout />
       <TasksLayout />
     </section>
