@@ -1,15 +1,18 @@
 import '../styles/task.css';
 import { TaskInterface } from '../interfaces/task';
+import { deleteTask, toggleTask } from '@/store/tasksSlice';
+import { useDispatch } from 'react-redux';
 
-const Task = ({
-  task,
-  changeTask,
-  removeTask,
-}: {
-  task: TaskInterface;
-  changeTask: (task: TaskInterface) => void;
-  removeTask: (task: TaskInterface) => void;
-}) => {
+const Task = ({ task }: { task: TaskInterface }) => {
+  const dispatch = useDispatch();
+
+  const onChangeTask = (id: number) => {
+    dispatch(toggleTask(id));
+  };
+
+  const onRemoveTask = (id: number) => {
+    dispatch(deleteTask(id));
+  };
   return (
     <div className="task">
       <div className="task__top-area">
@@ -26,7 +29,7 @@ const Task = ({
           </span>
         </div>
         <button
-          onClick={() => changeTask({ ...task, isCompleted: !task.isCompleted })}
+          onClick={() => onChangeTask(task.id)}
           className={`task__top-area__btn-complete ${task.isCompleted && 'task__top-area__btn-complete--done'}`}
         >
           <i className={`bx bx-check ${task.isCompleted && 'done'}`}></i>
@@ -36,7 +39,7 @@ const Task = ({
         <div className="task__bottom-area__task__timestamp-area">
           <span className="task__bottom-area__task__timestamp-area__date">Today</span>
         </div>
-        <button onClick={() => removeTask(task)} className="task__bottom-area__btn-remove">
+        <button onClick={() => onRemoveTask(task.id)} className="task__bottom-area__btn-remove">
           <i className="bx bx-x"></i>
         </button>
       </div>

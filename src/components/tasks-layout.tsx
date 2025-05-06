@@ -1,31 +1,11 @@
 'use client';
-import { useContext } from 'react';
 import '../styles/tasks-layout.css';
 import Task from './task';
-import { TaskContext } from '../contexts/task-context';
-import { TaskInterface } from '../interfaces/task';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const TasksLayout = ({ completedFilter = false }: { completedFilter?: boolean }) => {
-  const context = useContext(TaskContext);
-
-  if (!context) return null;
-
-  const { tasks, setTasks } = context;
-
-  const onChangeTask = (task: TaskInterface) => {
-    setTasks((prev) =>
-      prev.map((item) => {
-        if (item.id === task.id) {
-          return task;
-        }
-        return item;
-      })
-    );
-  };
-
-  const removeTask = (task: TaskInterface) => {
-    setTasks((prev) => prev.filter((item) => item.id !== task.id));
-  };
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
 
   const validateTasks = () => {
     if (completedFilter) {
@@ -38,12 +18,7 @@ const TasksLayout = ({ completedFilter = false }: { completedFilter?: boolean })
   return (
     <div id="tasks">
       {validateTasks().map((task, index) => (
-        <Task
-          removeTask={removeTask}
-          changeTask={onChangeTask}
-          task={task}
-          key={task.title + index}
-        />
+        <Task task={task} key={task.title + index} />
       ))}
     </div>
   );

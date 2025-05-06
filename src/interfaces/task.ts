@@ -9,3 +9,7 @@ export interface TaskContextInterface {
   tasks: TaskInterface[];
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
 }
+
+export interface TasksState {
+  tasks: TaskInterface[];
+}

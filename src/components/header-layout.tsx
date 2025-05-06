@@ -1,21 +1,21 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../styles/header-layout.css';
-import { TaskContext } from '../contexts/task-context';
 import { TaskInterface } from '../interfaces/task';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { addTask } from '@/store/tasksSlice';
 
 const HeaderLayout = () => {
+  const dispatch = useDispatch();
+
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
+
   const [title, setTitle] = useState('');
 
   const [subtitle, setSubtitle] = useState('');
 
   const [visibleAddNew, setVisibleAddNew] = useState(false);
-
-  const context = useContext(TaskContext);
-
-  if (!context) return null;
-
-  const { tasks, setTasks } = context;
 
   const handleAddNewTask = () => {
     if (title === '') {
@@ -32,7 +32,7 @@ const HeaderLayout = () => {
       title,
       subtitle,
     };
-    setTasks((prev) => [task, ...prev]);
+    dispatch(addTask(task));
     setSubtitle('');
     setTitle('');
     setVisibleAddNew(false);

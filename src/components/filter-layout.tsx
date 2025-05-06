@@ -1,18 +1,14 @@
 'use client';
 import '../styles/filter-layout.css';
-import { useContext } from 'react';
-import { TaskContext } from '../contexts/task-context';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const FilterLayout = () => {
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
+
   const pathname = usePathname();
-
-  const context = useContext(TaskContext);
-
-  if (!context) return null;
-
-  const { tasks } = context;
 
   return (
     <div id="filter">
