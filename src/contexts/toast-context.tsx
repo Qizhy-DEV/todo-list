@@ -10,7 +10,6 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const notify = (toast: Omit<Toast, 'id'>) => {
-
     const { done, status, subtitle, title, duration } = toast;
 
     const newToast: Toast = {
