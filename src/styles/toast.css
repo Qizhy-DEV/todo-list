@@ -114,8 +114,9 @@
 
 .toast__btn__close {
   position: absolute;
-  right: 1rem;
-  font-size: 22px;
+  right: 6px;
+  top: 6px;
+  font-size: 18px;
   color: #999;
   cursor: pointer;
 }
