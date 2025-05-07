@@ -18,7 +18,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
       status,
       subtitle,
       title,
-      duration,
+      duration: duration + toasts.length * 1500,
     };
 
     setToasts((prev) => {

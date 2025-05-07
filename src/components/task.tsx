@@ -3,13 +3,13 @@ import { TaskInterface } from '../interfaces/task';
 import { deleteTask, toggleTask } from '@/store/tasksSlice';
 import { useDispatch } from 'react-redux';
 import { useContext } from 'react';
-import { StatusToast, ToastContextInterface } from '@/interfaces/toast';
+import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
 import { ToastContext } from '@/contexts/toast-context';
 
 const Task = ({ task }: { task: TaskInterface }) => {
   const dispatch = useDispatch();
 
-  const context = useContext<ToastContextInterface | null>(ToastContext);
+  const context = useContext<ToastContextTypes | null>(ToastContext);
 
   if (!context) return;
 
@@ -22,6 +22,7 @@ const Task = ({ task }: { task: TaskInterface }) => {
       subtitle: 'Update status successfully',
       status: StatusToast.SUCCESS,
       done: false,
+      duration: 3000,
     });
   };
 
@@ -32,6 +33,7 @@ const Task = ({ task }: { task: TaskInterface }) => {
       subtitle: 'Remove task successfully',
       status: StatusToast.SUCCESS,
       done: false,
+      duration: 3000,
     });
   };
   return (

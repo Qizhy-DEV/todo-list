@@ -7,15 +7,24 @@ import { RootState } from '@/store';
 import { addTask } from '@/store/tasksSlice';
 import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
 import { ToastContext } from '@/contexts/toast-context';
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+  title: string;
+  subtitle: string;
+};
 
 const HeaderLayout = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>();
+
   const dispatch = useDispatch();
 
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
-
-  const [title, setTitle] = useState('');
-
-  const [subtitle, setSubtitle] = useState('');
 
   const [visibleAddNew, setVisibleAddNew] = useState(false);
 
@@ -25,36 +34,14 @@ const HeaderLayout = () => {
 
   const { notify } = context;
 
-  const handleAddNewTask = () => {
-    if (title === '') {
-      notify({
-        title: 'Warning',
-        subtitle: 'Please enter the title',
-        status: StatusToast.WARNING,
-        done: false,
-        duration: 3000,
-      });
-      return;
-    }
-    if (subtitle === '') {
-      notify({
-        title: 'Warning',
-        subtitle: 'Please enter the subtitle',
-        status: StatusToast.WARNING,
-        done: false,
-        duration: 3000,
-      });
-      return;
-    }
+  const onSubmit = (data: FormValues) => {
     const task: TaskInterface = {
       id: tasks.length,
       isCompleted: false,
-      title,
-      subtitle,
+      title: data.title,
+      subtitle: data.subtitle,
     };
     dispatch(addTask(task));
-    setSubtitle('');
-    setTitle('');
     setVisibleAddNew(false);
     notify({
       title: 'Success',
@@ -63,6 +50,7 @@ const HeaderLayout = () => {
       done: false,
       duration: 3000,
     });
+    reset();
   };
 
   return (
@@ -77,23 +65,26 @@ const HeaderLayout = () => {
           <span>New Task</span>
         </button>
       </section>
-      <section className={`adding ${visibleAddNew && 'adding--displayed'}`}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`adding ${visibleAddNew && 'adding--displayed'}`}
+      >
         <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          {...register('title', { required: 'Task name is required' })}
           placeholder="Title"
           className="adding__txt"
         />
+        {errors.title && <span className="adding__error">{errors.title.message}</span>}
         <input
-          value={subtitle}
-          onChange={(e) => setSubtitle(e.target.value)}
+          {...register('subtitle', { required: 'Task description is required' })}
           placeholder="Subtitle"
           className="adding__txt"
         />
-        <button onClick={handleAddNewTask} className="adding__btn-add">
+        {errors.subtitle && <span className="adding__error">{errors.subtitle.message}</span>}
+        <button type="submit" className="adding__btn-add">
           Add New Task
         </button>
-      </section>
+      </form>
     </>
   );
 };
