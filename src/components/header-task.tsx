@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import '../styles/header-layout.css';
 import { FormContext, FormContextTypes } from '@/contexts/form-context';
 

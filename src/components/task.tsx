@@ -22,7 +22,7 @@ const Task = ({ task }: { task: TaskInterface }) => {
 
   const { expandUpdateForm } = formContext;
 
-  const onChangeTask = (id: number) => {
+  const onChangeTask = (id: string) => {
     dispatch(toggleTask(id));
     notify({
       title: 'Success',
@@ -33,7 +33,7 @@ const Task = ({ task }: { task: TaskInterface }) => {
     });
   };
 
-  const onRemoveTask = (id: number) => {
+  const onRemoveTask = (id: string) => {
     dispatch(deleteTask(id));
     notify({
       title: 'Success',

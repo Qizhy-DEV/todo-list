@@ -1,11 +1,10 @@
 import { ToastContext } from '@/contexts/toast-context';
 import { TaskInterface } from '@/interfaces/task';
 import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
-import { RootState } from '@/store';
-import { addTask, updateTask } from '@/store/tasksSlice';
+import { updateTask } from '@/store/tasksSlice';
 import React, { useContext, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '@/styles/form.css';
 import { handleExpandOrCollapseForm } from '@/app/utils/utils';
 
@@ -31,8 +30,6 @@ const UpdateForm = ({ visible, collapse, currentTask }: Props) => {
   } = useForm<FormValues>();
 
   const dispatch = useDispatch();
-
-  const tasks = useSelector((state: RootState) => state.tasks.tasks);
 
   const context = useContext<ToastContextTypes | null>(ToastContext);
 
