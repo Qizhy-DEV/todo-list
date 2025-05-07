@@ -1,25 +1,29 @@
 'use client';
-import { useState } from 'react';
-import '../styles/header-layout.css';
-import AddNewForm from './add-new-form';
+import React from 'react';
+import '@/styles/nav-layout.css';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const HeaderLayout = () => {
-  const [visibleAddNew, setVisibleAddNew] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <>
-      <section id="header">
-        <div className="left-section">
-          <span className="title">Today&apos;s Task</span>
-          <span className="date">Wednesday, 11 May</span>
-        </div>
-        <button onClick={() => setVisibleAddNew((prev) => !prev)} className="btn-add">
-          <i className="bx bx-plus"></i>
-          <span>New Task</span>
-        </button>
-      </section>
-      <AddNewForm visibleAddNew={visibleAddNew} setVisibleAddNew={setVisibleAddNew} />
-    </>
+    <div id="navbar">
+      <span className="logo">Todolist</span>
+      <ul id="menu">
+        <Link href={'/'}>
+          <li className={`menu-item ${pathname === '/' && 'menu-item--active'}`}>
+            Tasks Management
+          </li>
+        </Link>
+        <Link href={'/about'}>
+          <li className={`menu-item ${pathname === '/about' && 'menu-item--active'}`}>About</li>
+        </Link>
+        <Link href={'/contact'}>
+          <li className={`menu-item ${pathname === '/contact' && 'menu-item--active'}`}>Contact</li>
+        </Link>
+      </ul>
+    </div>
   );
 };
 

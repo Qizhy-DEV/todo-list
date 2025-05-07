@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useContext } from 'react';
 import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
 import { ToastContext } from '@/contexts/toast-context';
+import { FormContext, FormContextTypes } from '@/contexts/form-context';
 
 const Task = ({ task }: { task: TaskInterface }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,12 @@ const Task = ({ task }: { task: TaskInterface }) => {
   if (!context) return;
 
   const { notify } = context;
+
+  const formContext = useContext<FormContextTypes | null>(FormContext);
+
+  if (!formContext) return;
+
+  const { expandUpdateForm } = formContext;
 
   const onChangeTask = (id: number) => {
     dispatch(toggleTask(id));
@@ -62,9 +69,20 @@ const Task = ({ task }: { task: TaskInterface }) => {
         <div className="task__bottom-area__task__timestamp-area">
           <span className="task__bottom-area__task__timestamp-area__date">Today</span>
         </div>
-        <button onClick={() => onRemoveTask(task.id)} className="task__bottom-area__btn-remove">
-          <i className="bx bx-x"></i>
-        </button>
+        <div className="task__bottom-area__btn-area">
+          <button
+            onClick={() => expandUpdateForm(task)}
+            className="task__bottom-area__btn-area__btn task__bottom-area__btn-area__btn-update"
+          >
+            <i className="fa-solid fa-pen"></i>
+          </button>
+          <button
+            onClick={() => onRemoveTask(task.id)}
+            className="task__bottom-area__btn-area__btn task__bottom-area__btn-area__btn-remove"
+          >
+            <i className="fa-solid fa-trash"></i>
+          </button>
+        </div>
       </div>
     </div>
   );

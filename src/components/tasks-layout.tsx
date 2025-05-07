@@ -4,11 +4,15 @@ import Task from './task';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
-const TasksLayout = ({ completedFilter = false }: { completedFilter?: boolean }) => {
+interface Props {
+  currentFilter: string;
+}
+
+const TasksLayout = ({ currentFilter }: Props) => {
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
 
   const validateTasks = () => {
-    if (completedFilter) {
+    if (currentFilter === 'completed-tasks') {
       return tasks.filter((item) => item.isCompleted);
     } else {
       return tasks;

@@ -5,6 +5,8 @@
   border-radius: 10px;
   padding: 15px;
   transition: 0.5s;
+  height: 130px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.09);
 }
 
 .task__top-area {
@@ -83,9 +85,37 @@
   color: #d0d0d0;
 }
 
-.task__bottom-area__btn-remove {
+.task__bottom-area__btn-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.task__bottom-area__btn-area__btn {
   width: 25px;
-  font-size: 20px;
+  color: white;
+  aspect-ratio: 1/1;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.task__bottom-area__btn-area__btn-remove {
+  font-size: 12px;
+  background-color: #f16b5d;
+}
+
+.task__bottom-area__btn-area__btn-update {
+  font-size: 12px;
+  background-color: #5dade2;
+}
+
+.task__bottom-area__btn-area__btn-remove {
+  width: 25px;
+  font-size: 12px;
   color: white;
   background-color: #f16b5d;
   aspect-ratio: 1/1;

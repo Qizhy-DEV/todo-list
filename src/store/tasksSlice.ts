@@ -13,16 +13,24 @@ const tasksSlice = createSlice({
     addTask: (state, action: PayloadAction<TaskInterface>) => {
       state.tasks = [action.payload, ...state.tasks];
     },
-    toggleTask: (state, action: PayloadAction<number>) => {
+    updateTask: (state, action: PayloadAction<TaskInterface>) => {
+      state.tasks = state.tasks.map((item) => {
+        if (item.id === action.payload.id) {
+          return action.payload;
+        }
+        return item;
+      });
+    },
+    toggleTask: (state, action: PayloadAction<string>) => {
       const task = state.tasks.find((t) => t.id === action.payload);
       if (task) task.isCompleted = !task.isCompleted;
     },
-    deleteTask: (state, action: PayloadAction<number>) => {
+    deleteTask: (state, action: PayloadAction<string>) => {
       state.tasks = state.tasks.filter((t) => t.id !== action.payload);
     },
   },
 });
 
-export const { addTask, toggleTask, deleteTask } = tasksSlice.actions;
+export const { addTask, toggleTask, deleteTask, updateTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

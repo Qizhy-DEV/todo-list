@@ -2,7 +2,7 @@ import { ToastContext } from '@/contexts/toast-context';
 import { TaskInterface } from '@/interfaces/task';
 import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
 import { RootState } from '@/store';
-import { addTask } from '@/store/tasksSlice';
+import { addTask, updateTask } from '@/store/tasksSlice';
 import React, { useContext, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,9 +17,10 @@ type FormValues = {
 interface Props {
   visible: boolean;
   collapse: () => void;
+  currentTask: TaskInterface | undefined;
 }
 
-const AddNewForm = ({ visible, collapse }: Props) => {
+const UpdateForm = ({ visible, collapse, currentTask }: Props) => {
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const {
@@ -40,22 +41,25 @@ const AddNewForm = ({ visible, collapse }: Props) => {
   const { notify } = context;
 
   const onSubmit = (data: FormValues) => {
-    const task: TaskInterface = {
-      id: new Date().toISOString(),
-      isCompleted: false,
-      title: data.title,
-      subtitle: data.subtitle,
-    };
-    dispatch(addTask(task));
-    collapse();
-    notify({
-      title: 'Success',
-      subtitle: 'Create new task successfully',
-      status: StatusToast.SUCCESS,
-      done: false,
-      duration: 3000,
-    });
-    reset();
+    if (currentTask) {
+      const { id, isCompleted } = currentTask;
+      const task: TaskInterface = {
+        id,
+        isCompleted,
+        title: data.title,
+        subtitle: data.subtitle,
+      };
+      dispatch(updateTask(task));
+      collapse();
+      notify({
+        title: 'Success',
+        subtitle: 'Create new task successfully',
+        status: StatusToast.SUCCESS,
+        done: false,
+        duration: 3000,
+      });
+      reset();
+    }
   };
 
   useEffect(() => {
@@ -72,9 +76,18 @@ const AddNewForm = ({ visible, collapse }: Props) => {
     }
   }, [visible]);
 
+  useEffect(() => {
+    if (currentTask) {
+      reset({
+        title: currentTask.title,
+        subtitle: currentTask.subtitle,
+      });
+    }
+  }, [currentTask]);
+
   return (
     <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`form`}>
-      <h3 className="form__title">Add New Task</h3>
+      <h3 className="form__title">Update Task</h3>
       <input
         {...register('title', { required: 'Task name is required' })}
         placeholder="Title"
@@ -87,8 +100,8 @@ const AddNewForm = ({ visible, collapse }: Props) => {
         className="form__txt"
       />
       {errors.subtitle && <span className="form__error">{errors.subtitle.message}</span>}
-      <button type="submit" className="form__btn form__btn-add">
-        Add New Task
+      <button type="submit" className="form__btn-update form__btn">
+        Update Task
       </button>
       <button
         onClick={() => collapse()}
@@ -99,4 +112,4 @@ const AddNewForm = ({ visible, collapse }: Props) => {
   );
 };
 
-export default AddNewForm;
+export default UpdateForm;
