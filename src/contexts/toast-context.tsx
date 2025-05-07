@@ -1,8 +1,7 @@
 'use client';
 import '@/styles/toast.css';
 import { ToastContextTypes, Toast } from '@/interfaces/toast';
-import { createContext, useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { createContext, useState } from 'react';
 import ToastElement from '@/components/toast';
 
 export const ToastContext = createContext<ToastContextTypes | null>(null);
