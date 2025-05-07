@@ -1,12 +1,6 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../styles/header-layout.css';
-import { TaskInterface } from '../interfaces/task';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
-import { addTask } from '@/store/tasksSlice';
-import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
-import { ToastContext } from '@/contexts/toast-context';
 import AddNewForm from './add-new-form';
 
 const HeaderLayout = () => {
