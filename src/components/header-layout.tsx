@@ -27,7 +27,12 @@ const HeaderLayout = () => {
 
   const handleAddNewTask = () => {
     if (title === '') {
-      notify({ title: 'Warning', subtitle: 'Please enter the title', status: StatusToast.WARNING });
+      notify({
+        title: 'Warning',
+        subtitle: 'Please enter the title',
+        status: StatusToast.WARNING,
+        done: false,
+      });
       return;
     }
     if (subtitle === '') {
@@ -35,6 +40,7 @@ const HeaderLayout = () => {
         title: 'Warning',
         subtitle: 'Please enter the subtitle',
         status: StatusToast.WARNING,
+        done: false,
       });
       return;
     }
@@ -52,6 +58,7 @@ const HeaderLayout = () => {
       title: 'Success',
       subtitle: 'Create new task successfully',
       status: StatusToast.SUCCESS,
+      done: false,
     });
   };
 

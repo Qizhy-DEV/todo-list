@@ -21,12 +21,18 @@ const Task = ({ task }: { task: TaskInterface }) => {
       title: 'Success',
       subtitle: 'Update status successfully',
       status: StatusToast.SUCCESS,
+      done: false,
     });
   };
 
   const onRemoveTask = (id: number) => {
     dispatch(deleteTask(id));
-    notify({ title: 'Success', subtitle: 'Remove task successfully', status: StatusToast.SUCCESS });
+    notify({
+      title: 'Success',
+      subtitle: 'Remove task successfully',
+      status: StatusToast.SUCCESS,
+      done: false,
+    });
   };
   return (
     <div className="task">

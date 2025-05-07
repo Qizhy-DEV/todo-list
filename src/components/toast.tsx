@@ -9,7 +9,11 @@ const Toast = ({ toast, clear }: { toast: ToastInterface; clear: (id: string) =>
   };
 
   return (
-    <div key={toast.subtitle} className={`toast toast--${toast.status}`}>
+    <div
+      key={toast.subtitle}
+      style={{ height: toast.done ? 0 : '70px' }}
+      className={`toast toast--${toast.status}`}
+    >
       <div className={`toast__status-line toast__status-line--${toast.status}`} />
       <div className={`toast__status toast__status--${toast.status}`}>
         <i className={`fa-solid ${toastIcons[toast.status]}`}></i>

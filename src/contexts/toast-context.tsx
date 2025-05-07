@@ -1,7 +1,7 @@
 'use client';
 import '@/styles/toast.css';
 import { ToastContextInterface, ToastInterface } from '@/interfaces/toast';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Toast from '@/components/toast';
 
@@ -13,12 +13,28 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const notify = (toast: ToastInterface) => {
     const newId = uuidv4();
 
-    setToasts((prev) => [{ ...toast, id: newId }, ...prev]);
+    setToasts((prev) => [...prev, { ...toast, id: newId }]);
 
     setTimeout(() => {
-      setToasts((prev) => prev.filter((item) => item.id !== newId));
+      setToasts((prev) =>
+        prev.map((item) => {
+          if (item.id === newId) {
+            return { ...item, done: true };
+          }
+          return item;
+        })
+      );
     }, 4000);
   };
+
+  useEffect(() => {
+    if (toasts.length > 0) {
+      const waitingElement = toasts.find((item) => item.done === false);
+      if (!waitingElement) {
+        setToasts([]);
+      }
+    }
+  }, [toasts]);
 
   const clear = (id: string) => {
     setToasts((prev) => prev.filter((item) => item.id !== id));

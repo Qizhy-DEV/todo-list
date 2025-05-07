@@ -9,6 +9,7 @@ export interface ToastInterface {
   title: string;
   subtitle: string;
   status: StatusToast;
+  done: boolean;
 }
 
 export interface ToastContextInterface {

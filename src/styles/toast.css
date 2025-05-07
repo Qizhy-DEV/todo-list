@@ -22,6 +22,12 @@
   }
 }
 
+@keyframes toAbsolute {
+  to {
+    position: absolute;;
+  }
+}
+
 #toast {
   width: 300px;
   height: auto;
@@ -38,17 +44,16 @@
 .toast {
   width: 100%;
   background-color: white;
-  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: start;
   gap: 1rem;
+  position: relative;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.142);
   border-radius: 5px;
+  transition: 0.5s;
   overflow: hidden;
-  animation:
-    slideInRight ease 0.4s,
-    fadeOut ease 1s 3s forwards;
+  animation: slideInRight ease 0.4s, fadeOut ease 1s 3s forwards;
 }
 
 .toast__status-line {
