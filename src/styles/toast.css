@@ -42,6 +42,7 @@
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.142);
   border-radius: 5px;
   transition: 0.5s;
+  margin-bottom: 4px;
   overflow: hidden;
 }
 
