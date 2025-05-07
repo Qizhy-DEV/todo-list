@@ -4,16 +4,15 @@ export enum StatusToast {
   FAIL = 'fail',
 }
 
-export interface ToastInterface {
-  id?: string;
+export interface Toast {
+  id: string;
   title: string;
   subtitle: string;
   status: StatusToast;
   done: boolean;
+  duration: number;
 }
 
-export interface ToastContextInterface {
-  toasts: ToastInterface[];
-  notify: (toast: ToastInterface) => void;
-  clear: (id: string) => void;
+export interface ToastContextTypes {
+  notify: (toast: Omit<Toast, 'id'>) => void;
 }

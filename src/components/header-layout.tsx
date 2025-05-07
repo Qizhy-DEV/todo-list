@@ -5,7 +5,7 @@ import { TaskInterface } from '../interfaces/task';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { addTask } from '@/store/tasksSlice';
-import { StatusToast, ToastContextInterface } from '@/interfaces/toast';
+import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
 import { ToastContext } from '@/contexts/toast-context';
 
 const HeaderLayout = () => {
@@ -19,7 +19,7 @@ const HeaderLayout = () => {
 
   const [visibleAddNew, setVisibleAddNew] = useState(false);
 
-  const context = useContext<ToastContextInterface | null>(ToastContext);
+  const context = useContext<ToastContextTypes | null>(ToastContext);
 
   if (!context) return;
 
@@ -32,6 +32,7 @@ const HeaderLayout = () => {
         subtitle: 'Please enter the title',
         status: StatusToast.WARNING,
         done: false,
+        duration: 3000,
       });
       return;
     }
@@ -41,6 +42,7 @@ const HeaderLayout = () => {
         subtitle: 'Please enter the subtitle',
         status: StatusToast.WARNING,
         done: false,
+        duration: 3000,
       });
       return;
     }
@@ -59,6 +61,7 @@ const HeaderLayout = () => {
       subtitle: 'Create new task successfully',
       status: StatusToast.SUCCESS,
       done: false,
+      duration: 3000,
     });
   };
 

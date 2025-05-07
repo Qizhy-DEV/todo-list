@@ -1,17 +1,32 @@
-import { StatusToast, ToastInterface } from '@/interfaces/toast';
-import React from 'react';
+import { StatusToast, Toast } from '@/interfaces/toast';
+import React, { AnimationEvent } from 'react';
 
-const Toast = ({ toast, clear }: { toast: ToastInterface; clear: (id: string) => void }) => {
+interface Props {
+  toast: Toast;
+  clear: (id: string) => void;
+}
+
+const ToastElement = ({ toast, clear }: Props) => {
   const toastIcons = {
     [StatusToast.SUCCESS]: 'fa-check',
     [StatusToast.WARNING]: 'fa-exclamation',
     [StatusToast.FAIL]: 'fa-circle-exclamation',
   };
 
+  const checkCompleteAnimation = (e: AnimationEvent<HTMLDivElement>) => {
+    if (e.animationName === 'fadeOut') {
+      clear(toast.id as string);
+    }
+  };
+
   return (
     <div
-      key={toast.subtitle}
-      style={{ height: toast.done ? 0 : '70px' }}
+      data-id={toast.id}
+      onAnimationEnd={checkCompleteAnimation}
+      style={{
+        height: toast.done ? 0 : '70px',
+        animation: `slideInRight ease 0.4s, fadeOut ease 1s ${(toast.duration / 1000).toFixed(2)}s forwards`,
+      }}
       className={`toast toast--${toast.status}`}
     >
       <div className={`toast__status-line toast__status-line--${toast.status}`} />
@@ -30,4 +45,4 @@ const Toast = ({ toast, clear }: { toast: ToastInterface; clear: (id: string) =>
   );
 };
 
-export default Toast;
+export default ToastElement;
