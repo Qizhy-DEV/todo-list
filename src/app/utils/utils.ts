@@ -1,5 +1,5 @@
 interface FormParamsInterface {
-  formRef: any;
+  formRef: React.RefObject<HTMLElement|null>;
   visible: boolean;
   expandHeight: string;
   expandWidth: string;

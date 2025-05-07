@@ -31,6 +31,29 @@ const UpdateForm = ({ visible, collapse, currentTask }: Props) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (formRef.current) {
+      handleExpandOrCollapseForm({
+        formRef,
+        collapseHeight: '250px',
+        collapseWidth: '500px',
+        expandHeight: '270px',
+        expandWidth: '520px',
+        visible,
+        displayType: 'flex',
+      });
+    }
+  }, [visible]);
+
+  useEffect(() => {
+    if (currentTask) {
+      reset({
+        title: currentTask.title,
+        subtitle: currentTask.subtitle,
+      });
+    }
+  }, [currentTask]);
+
   const context = useContext<ToastContextTypes | null>(ToastContext);
 
   if (!context) return;
@@ -58,29 +81,6 @@ const UpdateForm = ({ visible, collapse, currentTask }: Props) => {
       reset();
     }
   };
-
-  useEffect(() => {
-    if (formRef.current) {
-      handleExpandOrCollapseForm({
-        formRef,
-        collapseHeight: '250px',
-        collapseWidth: '500px',
-        expandHeight: '270px',
-        expandWidth: '520px',
-        visible,
-        displayType: 'flex',
-      });
-    }
-  }, [visible]);
-
-  useEffect(() => {
-    if (currentTask) {
-      reset({
-        title: currentTask.title,
-        subtitle: currentTask.subtitle,
-      });
-    }
-  }, [currentTask]);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`form`}>

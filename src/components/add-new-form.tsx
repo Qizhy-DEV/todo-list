@@ -30,6 +30,20 @@ const AddNewForm = ({ visible, collapse }: Props) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (formRef.current) {
+      handleExpandOrCollapseForm({
+        formRef,
+        collapseHeight: '250px',
+        collapseWidth: '500px',
+        expandHeight: '270px',
+        expandWidth: '520px',
+        visible,
+        displayType: 'flex',
+      });
+    }
+  }, [visible]);
+
   const context = useContext<ToastContextTypes | null>(ToastContext);
 
   if (!context) return;
@@ -54,20 +68,6 @@ const AddNewForm = ({ visible, collapse }: Props) => {
     });
     reset();
   };
-
-  useEffect(() => {
-    if (formRef.current) {
-      handleExpandOrCollapseForm({
-        formRef,
-        collapseHeight: '250px',
-        collapseWidth: '500px',
-        expandHeight: '270px',
-        expandWidth: '520px',
-        visible,
-        displayType: 'flex',
-      });
-    }
-  }, [visible]);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className={`form`}>
