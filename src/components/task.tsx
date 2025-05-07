@@ -12,11 +12,11 @@ const Task = ({ task }: { task: TaskInterface }) => {
 
   const context = useContext<ToastContextTypes | null>(ToastContext);
 
+  const formContext = useContext<FormContextTypes | null>(FormContext);
+
   if (!context) return;
 
   const { notify } = context;
-
-  const formContext = useContext<FormContextTypes | null>(FormContext);
 
   if (!formContext) return;
 
