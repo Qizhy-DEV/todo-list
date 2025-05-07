@@ -16,25 +16,23 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     setToasts((prev) => [...prev, { ...toast, id: newId }]);
 
     setTimeout(() => {
-      setToasts((prev) =>
-        prev.map((item) => {
-          if (item.id === newId) {
-            return { ...item, done: true };
-          }
-          return item;
-        })
-      );
+      setToasts(prev => prev.map((item) => {
+        if (item.id === newId) {
+          return { ...item, done: true }
+        }
+        return item
+      }))
     }, 4000);
   };
 
   useEffect(() => {
     if (toasts.length > 0) {
-      const waitingElement = toasts.find((item) => item.done === false);
+      const waitingElement = toasts.find(item => item.done === false)
       if (!waitingElement) {
-        setToasts([]);
+        setToasts([])
       }
     }
-  }, [toasts]);
+  }, [toasts])
 
   const clear = (id: string) => {
     setToasts((prev) => prev.filter((item) => item.id !== id));
