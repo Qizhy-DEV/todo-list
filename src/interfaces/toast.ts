@@ -1,18 +1,18 @@
 export enum StatusToast {
-  SUCCESS = 'success',
-  WARNING = 'warning',
-  FAIL = 'fail',
+    SUCCESS = 'success',
+    WARNING = 'warning',
+    FAIL = 'fail',
 }
 
 export interface Toast {
-  id: string;
-  title: string;
-  subtitle: string;
-  status: StatusToast;
-  done: boolean;
-  duration: number;
+    id: string;
+    title: string;
+    subtitle: string;
+    status: StatusToast;
+    done: boolean;
+    duration: number;
 }
 
 export interface ToastContextTypes {
-  notify: (toast: Omit<Toast, 'id'>) => void;
+    notify: (toast: Omit<Toast, 'id'>) => void;
 }

@@ -1,32 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import '@/styles/overlay.css';
+import overlayManager from '@/utils/overlayManager';
 
-interface Props {
-  visible: boolean;
-  onClose: () => void;
-}
+const Overlay = () => {
+    const overlayRef = useRef<HTMLElement | null>(null);
 
-const Overlay = ({ visible, onClose }: Props) => {
-  const overlayRef = useRef<HTMLElement | null>(null);
+    const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const overlayElement = overlayRef.current;
-    if (overlayElement) {
-      if (visible) {
-        overlayElement.style.display = 'block';
-        setTimeout(() => {
-          overlayElement.style.opacity = '1';
-        }, 200);
-      } else {
-        overlayElement.style.opacity = '0';
-        setTimeout(() => {
-          overlayElement.style.display = 'none';
-        }, 400);
-      }
-    }
-  }, [visible]);
+    const handleVisibility = useCallback((visible: boolean) => {
+        setVisible(visible);
+    }, []);
 
-  return <section ref={overlayRef} onClick={onClose} id="overlay" />;
+    useEffect(() => {
+        overlayManager.on('onOpen', handleVisibility);
+        overlayManager.on('onClose', handleVisibility);
+
+        return () => {
+            overlayManager.off('onOpen', handleVisibility);
+            overlayManager.off('onClose', handleVisibility);
+        };
+    }, []);
+
+    useEffect(() => {
+        const overlayElement = overlayRef.current;
+
+        if (!overlayElement) return;
+
+        if (visible) {
+            overlayElement.style.display = 'block';
+            setTimeout(() => {
+                overlayElement.style.opacity = '1';
+            }, 200);
+        } else {
+            overlayElement.style.opacity = '0';
+            const timeout = setTimeout(() => {
+                overlayElement.style.display = 'none';
+            }, 400);
+            return () => clearTimeout(timeout);
+        }
+    }, [visible]);
+
+    return <section onClick={() => overlayManager.onClose()} ref={overlayRef} id="overlay" />;
 };
 
 export default Overlay;

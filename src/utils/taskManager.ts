@@ -1,27 +1,36 @@
 import { EventEmitter } from 'events';
 import { Toast } from '@/interfaces/toast';
 
-class ToastManager extends EventEmitter {
-  private toasts: Toast[] = [];
+function createToastManager() {
+    const emitter = new EventEmitter();
+    let toasts: Toast[] = [];
 
-  notify(toast: Omit<Toast, 'id'>) {
-    const { done, status, subtitle, title, duration } = toast;
-    const newToast: Toast = {
-      id: new Date().getTime().toString(),
-      done,
-      status,
-      subtitle,
-      title,
-      duration: duration + this.toasts.length * 1500,
+    const notify = (toast: Omit<Toast, 'id'>) => {
+        const { done, status, subtitle, title, duration } = toast;
+        const newToast: Toast = {
+            id: new Date().getTime().toString(),
+            done,
+            status,
+            subtitle,
+            title,
+            duration: duration + toasts.length * 2000,
+        };
+        toasts.push(newToast);
+        emitter.emit('toastAdded', newToast);
     };
-    this.emit('toastAdded', newToast);
-  }
 
-  clear(id: string) {
-    this.toasts = this.toasts.filter((item) => item.id !== id);
-    this.emit('toastRemoved', id);
-  }
+    const clear = (id: string) => {
+        toasts = toasts.filter((item) => item.id !== id);
+        emitter.emit('toastRemoved', id);
+    };
+
+    return {
+        notify,
+        clear,
+        on: emitter.on.bind(emitter),
+        off: emitter.off.bind(emitter),
+    };
 }
 
-const toastManager = new ToastManager();
+const toastManager = createToastManager();
 export default toastManager;

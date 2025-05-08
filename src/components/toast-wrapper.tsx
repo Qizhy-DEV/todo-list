@@ -6,33 +6,37 @@ import ToastElement from '@/components/toast';
 import toastManager from '@/utils/taskManager';
 
 const ToastWrapper = () => {
-  const [toasts, setToasts] = useState<Toast[]>([]);
+    const [toasts, setToasts] = useState<Toast[]>([]);
 
-  useEffect(() => {
-    const handleToastAdded = (newToast: Toast) => {
-      setToasts((prev) => [...prev, newToast]);
-    };
+    useEffect(() => {
+        const handleToastAdded = (newToast: Toast) => {
+            setToasts((prev) => [...prev, newToast]);
+        };
 
-    const handleToastRemoved = (id: string) => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    };
+        const handleToastRemoved = (id: string) => {
+            setToasts((prev) => prev.filter((toast) => toast.id !== id));
+        };
 
-    toastManager.on('toastAdded', handleToastAdded);
-    toastManager.on('toastRemoved', handleToastRemoved);
+        toastManager.on('toastAdded', handleToastAdded);
+        toastManager.on('toastRemoved', handleToastRemoved);
 
-    return () => {
-      toastManager.removeListener('toastAdded', handleToastAdded);
-      toastManager.removeListener('toastRemoved', handleToastRemoved);
-    };
-  }, []);
+        return () => {
+            toastManager.off('toastAdded', handleToastAdded);
+            toastManager.off('toastRemoved', handleToastRemoved);
+        };
+    }, []);
 
-  return (
-    <div id="toast">
-      {toasts.map((toast) => (
-        <ToastElement toast={toast} clear={() => toastManager.clear(toast.id)} key={toast.id} />
-      ))}
-    </div>
-  );
+    return (
+        <div id="toast">
+            {toasts.map((toast) => (
+                <ToastElement
+                    toast={toast}
+                    clear={() => toastManager.clear(toast.id)}
+                    key={toast.id}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default ToastWrapper;
