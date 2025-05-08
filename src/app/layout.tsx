@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/providers/redux-provider';
-import ToastProvider from '@/contexts/toast-context';
-import HeaderLayout from '@/components/header-layout';
-import FormProvider from '@/contexts/form-context';
+import Header from '@/components/header-layout';
+import ToastWrapper from '@/contexts/toast-context';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -40,14 +39,11 @@ export default function RootLayout({
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ToastProvider>
-          <ReduxProvider>
-            <FormProvider>
-              <HeaderLayout />
-              {children}
-            </FormProvider>
-          </ReduxProvider>
-        </ToastProvider>
+        <ToastWrapper />
+        <ReduxProvider>
+          <Header />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );

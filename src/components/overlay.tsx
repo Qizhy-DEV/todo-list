@@ -3,10 +3,10 @@ import '@/styles/overlay.css';
 
 interface Props {
   visible: boolean;
-  collapseAll: () => void;
+  onClose: () => void;
 }
 
-const Overlay = ({ visible, collapseAll }: Props) => {
+const Overlay = ({ visible, onClose }: Props) => {
   const overlayRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Overlay = ({ visible, collapseAll }: Props) => {
     }
   }, [visible]);
 
-  return <section ref={overlayRef} onClick={collapseAll} id="overlay" />;
+  return <section ref={overlayRef} onClick={onClose} id="overlay" />;
 };
 
 export default Overlay;

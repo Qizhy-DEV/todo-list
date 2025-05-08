@@ -4,7 +4,7 @@ import '@/styles/nav-layout.css';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-const HeaderLayout = () => {
+const Header = () => {
   const pathname = usePathname();
 
   return (
@@ -27,4 +27,4 @@ const HeaderLayout = () => {
   );
 };
 
-export default HeaderLayout;
+export default Header;

@@ -2,29 +2,20 @@ import '../styles/task.css';
 import { TaskInterface } from '../interfaces/task';
 import { deleteTask, toggleTask } from '@/store/tasksSlice';
 import { useDispatch } from 'react-redux';
-import { useContext } from 'react';
-import { StatusToast, ToastContextTypes } from '@/interfaces/toast';
-import { ToastContext } from '@/contexts/toast-context';
-import { FormContext, FormContextTypes } from '@/contexts/form-context';
+import { StatusToast } from '@/interfaces/toast';
+import toastManager from '@/utils/taskManager';
 
-const Task = ({ task }: { task: TaskInterface }) => {
+interface Props {
+  task: TaskInterface;
+  expandUpdateForm: (currentTask: TaskInterface) => void;
+}
+
+const Task = ({ task, expandUpdateForm }: Props) => {
   const dispatch = useDispatch();
-
-  const context = useContext<ToastContextTypes | null>(ToastContext);
-
-  const formContext = useContext<FormContextTypes | null>(FormContext);
-
-  if (!context) return;
-
-  const { notify } = context;
-
-  if (!formContext) return;
-
-  const { expandUpdateForm } = formContext;
 
   const onChangeTask = (id: string) => {
     dispatch(toggleTask(id));
-    notify({
+    toastManager.notify({
       title: 'Success',
       subtitle: 'Update status successfully',
       status: StatusToast.SUCCESS,
@@ -35,7 +26,7 @@ const Task = ({ task }: { task: TaskInterface }) => {
 
   const onRemoveTask = (id: string) => {
     dispatch(deleteTask(id));
-    notify({
+    toastManager.notify({
       title: 'Success',
       subtitle: 'Remove task successfully',
       status: StatusToast.SUCCESS,

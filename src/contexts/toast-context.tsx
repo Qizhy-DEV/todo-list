@@ -1,45 +1,38 @@
 'use client';
 import '@/styles/toast.css';
-import { ToastContextTypes, Toast } from '@/interfaces/toast';
-import { createContext, useState } from 'react';
+import { Toast } from '@/interfaces/toast';
+import { useEffect, useState } from 'react';
 import ToastElement from '@/components/toast';
+import toastManager from '@/utils/taskManager';
 
-export const ToastContext = createContext<ToastContextTypes | null>(null);
-
-const ToastProvider = ({ children }: { children: React.ReactNode }) => {
+const ToastWrapper = () => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const notify = (toast: Omit<Toast, 'id'>) => {
-    const { done, status, subtitle, title, duration } = toast;
-
-    const newToast: Toast = {
-      id: new Date().getTime().toString(),
-      done,
-      status,
-      subtitle,
-      title,
-      duration: duration + toasts.length * 1500,
+  useEffect(() => {
+    const handleToastAdded = (newToast: Toast) => {
+      setToasts((prev) => [...prev, newToast]);
     };
 
-    setToasts((prev) => {
-      return [...prev, newToast];
-    });
-  };
+    const handleToastRemoved = (id: string) => {
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    };
 
-  const clear = (id: string) => {
-    setToasts((prev) => prev.filter((item) => item.id !== id));
-  };
+    toastManager.on('toastAdded', handleToastAdded);
+    toastManager.on('toastRemoved', handleToastRemoved);
+
+    return () => {
+      toastManager.removeListener('toastAdded', handleToastAdded);
+      toastManager.removeListener('toastRemoved', handleToastRemoved);
+    };
+  }, []);
 
   return (
-    <ToastContext.Provider value={{ notify }}>
-      <div id="toast">
-        {toasts.map((toast) => (
-          <ToastElement toast={toast} clear={clear} key={toast.id} />
-        ))}
-      </div>
-      {children}
-    </ToastContext.Provider>
+    <div id="toast">
+      {toasts.map((toast) => (
+        <ToastElement toast={toast} clear={() => toastManager.clear(toast.id)} key={toast.id} />
+      ))}
+    </div>
   );
 };
 
-export default ToastProvider;
+export default ToastWrapper;
