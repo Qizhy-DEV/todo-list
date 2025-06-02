@@ -26,3 +26,16 @@ body {
     overflow-y: auto;
     align-items: center;
 }
+
+.content-1 {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 9 / 12;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+    overflow-y: auto;
+    align-items: center;
+}
